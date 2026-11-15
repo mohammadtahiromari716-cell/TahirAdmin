@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>افغانستان حساب</title>
+<style>
+body{font-family:Arial;background:#f1f5f9;margin:0;padding:20px;color:#172554}
+header{background:#123c2b;color:white;padding:20px;border-radius:15px;text-align:center}
+.card{background:white;padding:18px;margin-top:15px;border-radius:12px;box-shadow:0 2px 8px #ddd}
+button{background:#126b45;color:white;border:0;padding:12px;border-radius:8px;margin:5px}
+input,select{padding:12px;width:90%;margin:7px;border:1px solid #ccc;border-radius:8px}
+</style>
+</head>
+<body>
+<header>
+<h2>🇦🇫 افغانستان حساب</h2>
+<p>سیستم مدیریت و حسابداری</p>
+</header>
+<div class="card">
+<h3>انتخاب زبان</h3>
+<select id="lang" onchange="changeLang()">
+<option value="da">دری</option>
+<option value="ps">پښتو</option>
+<option value="en">English</option>
+</select>
+</div>
+<div class="card">
+<h3 id="title">ثبت فروشات</h3>
+<input id="amount" type="number" placeholder="مبلغ">
+<select id="currency">
+<option value="AFN">افغانی</option>
+<option value="USD">دالر</option>
+<option value="TOMAN">تومان</option>
+</select>
+<button onclick="saveSale()">ثبت فروش</button>
+<h3 id="total">فروشات ثبت شده</h3>
+<div id="sales"></div>
+</div>
+<script>
+let translations={
+da:{title:"ثبت فروشات",amount:"مبلغ",save:"ثبت فروش",total:"فروشات ثبت شده"},
+ps:{title:"د پلورنې ثبت",amount:"اندازه",save:"پلور ثبتول",total:"ثبت شوي پلورونه"},
+en:{title:"Record Sale",amount:"Amount",save:"Save Sale",total:"Recorded Sales"}
+};
+function changeLang(){
+let t=translations[document.getElementById("lang").value];
+document.getElementById("title").innerText=t.title;
+document.getElementById("total").innerText=t.total;
+document.querySelector("button").innerText=t.save;
+document.getElementById("amount").placeholder=t.amount;
+}
+function saveSale(){
+let amount=document.getElementById("amount").value;
+let currency=document.getElementById("currency").value;
+if(!amount||Number(amount)<=0){alert("مبلغ را وارد کنید");return;}
+let sales=JSON.parse(localStorage.getItem("sales")||"[]");
+sales.push({amount:Number(amount),currency:currency});
+localStorage.setItem("sales",JSON.stringify(sales));
+document.getElementById("amount").value="";
+showSales();
+}
+function showSales(){
+let sales=JSON.parse(localStorage.getItem("sales")||"[]");
+document.getElementById("sales").innerHTML=sales.map(s=>"<p>"+s.amount+" "+s.currency+"</p>").join("");
+}
+showSales();
+</script>
+</body>
+</html>
