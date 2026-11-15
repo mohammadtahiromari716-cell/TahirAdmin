@@ -1,6 +1,10 @@
+
 {
-  "appId": "com.afghanistan.hisab",
-  "appName": "افغانستان حساب",
-  "webDir": ".",
-  "bundledWebRuntime": false
+  "appId": "com.tahir.admin",
+  "appName": "Tahir Admin",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  }
 }
